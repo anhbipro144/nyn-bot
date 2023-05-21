@@ -2,11 +2,9 @@ import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
 import * as ExcelJS from 'exceljs';
 
-import { FileService } from 'src/services/fs/fs.service';
-
 @Injectable()
 export class ExcelService {
-  constructor(private readonly fs: FileService) {}
+  constructor() {}
   async getTop() {
     const useragent =
       'Mozilla%2F5.0+%28iPhone%3B+CPU+iPhone+OS+7_0+like+Mac+OS+X%29+AppleWebKit%2F537.51.1+%28KHTML%2C+like+Gecko%29+Version%2F7.0+Mobile%2F11A465+Safari%2F9537.53';
