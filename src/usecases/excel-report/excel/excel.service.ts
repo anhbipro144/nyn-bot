@@ -2,13 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
 import * as ExcelJS from 'exceljs';
 
-import { Row } from 'src/configuration/const.interface';
-import { formats, keyWords } from 'src/configuration/const';
-
-import { control } from 'src/configuration/control';
 import { FileService } from 'src/services/fs/fs.service';
-
-const { HEADLESS } = control;
 
 @Injectable()
 export class ExcelService {
@@ -19,7 +13,7 @@ export class ExcelService {
     const location = 'w+CAIQIFISCSXqSrhS2XQxEctjUsuTzREh';
 
     const browser = await puppeteer.launch({
-      headless: HEADLESS,
+      headless: control.HEADLESS,
       args: ['--disabled-setuid-sandbox', '--no-sandbox'],
     });
     const page = await browser.newPage();
@@ -109,4 +103,202 @@ export class ExcelService {
     const buffer = await workbook.xlsx.writeBuffer();
     return buffer;
   }
+}
+
+export const keyWords: keyWord[] = [
+  {
+    keyword: 'kham+tri',
+    chinese: 'Chi',
+  },
+  {
+    keyword: '[kham+tri]',
+    chinese: 'khamtrichina',
+  },
+  {
+    keyword: 'benh+tri',
+    chinese: 'benhtrichina',
+  },
+];
+
+export const formats: nameList = {
+  'khamtri.dakhoahongphuc.vn': {
+    value: 'Hồng Phúc 鸿福',
+    format: {
+      bgColor: '00FF00',
+    },
+  },
+  'benhtri.phongkhamdakhoahongcuong.vn': {
+    value: 'Hồng Cường 鸿强',
+    format: {
+      bgColor: 'FF00FF',
+    },
+  },
+  'benhtri.phongkhamdinhtienhoang.vn': {
+    value: 'Đinh Tiên Hoàng 丁先皇',
+    format: {
+      bgColor: 'DD7E6B',
+    },
+  },
+  'benhtri.dakhoavankiet.vn': {
+    value: 'Văn Kiệt 文杰',
+    format: {
+      bgColor: 'FFF2CC',
+    },
+  },
+  'benhtri.dakhoaaua.vn': {
+    value: 'Âu Á 欧亚',
+    format: {
+      bgColor: '4BACC6',
+    },
+  },
+  'www.phongkhamdakhoatanbinh.vn': {
+    value: 'TÂN BÌNH 新平',
+    format: {
+      bgColor: '4DF3F9',
+    },
+  },
+};
+
+export const dummy: Row[] = [
+  {
+    keyword: 'kham+tri',
+    chinese: 'Chi',
+    top: [
+      {
+        value: 'Hong Phuc',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'Hong Cuong',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'Tien Hoang',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'Tan Binh',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'Van Kiet',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'A Au',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+    ],
+  },
+  {
+    keyword: '[kham+tri]',
+    chinese: 'khamtrichina',
+    top: [
+      {
+        format: {
+          bgColor: '00FF00',
+        },
+        value: 'Hong Phuc',
+      },
+      {
+        value: 'Hong Cuong',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'Tien Hoang',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'Van Kiet',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'A Au',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'Tan Binh',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+    ],
+  },
+  {
+    keyword: 'benh+tri',
+    chinese: 'benhtrichina',
+    top: [
+      {
+        format: {
+          bgColor: '00FF00',
+        },
+        value: 'Hong Phuc',
+      },
+      {
+        value: 'Tien Hoang',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'A Au',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      {
+        value: 'Van Kiet',
+        format: {
+          bgColor: '00FF00',
+        },
+      },
+      null,
+      null,
+      null,
+    ],
+  },
+];
+
+export const control = {
+  HEADLESS: true,
+};
+
+export interface nameList {
+  [key: string]: top;
+}
+
+export interface top {
+  value: string;
+  format: {
+    bgColor: string;
+  };
+}
+
+export interface Row extends keyWord {
+  top: top[];
+}
+
+export interface keyWord {
+  keyword: string;
+  chinese: string;
 }
