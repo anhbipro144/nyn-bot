@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
 import * as ExcelJS from 'exceljs';
-import * as fs from 'fs';
-import * as path from 'path';
 
 import { Row } from 'src/configuration/const.interface';
 import { formats, keyWords } from 'src/configuration/const';
@@ -65,7 +63,7 @@ export class ExcelService {
         return { values, urls };
       }, formats);
 
-      this.fs.appendFile(results.urls);
+      // this.fs.appendFile(results.urls);
       const Row: Row = {
         keyword,
         chinese,
