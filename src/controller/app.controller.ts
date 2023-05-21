@@ -17,7 +17,7 @@ export class AppController {
   //   res.send(buffer);
   // }
 
-  @Get('product')
+  @Get()
   async testExcell(@Res() res: Response) {
     const data = await this.excelService.getTop();
     const buffer = await this.excelService.exportExcelNew(data);
